@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chat App</title>
+</head>
+<style>
+    .users {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+</style>
+<body>
+    <h1>List of users:</h1>
+    <b>Welcome, {{current_user}}</b>
+    <br><br>
+
+    <div class="users">
+
+        <div class="all-users">
+            <h3>All Users</h3>
+            <ul>
+                {% for user in users %}
+                <li>
+                    {{user.username}}
+                    <a href="{{url_for('send_friend_request', recipient=user.username)}}">Send request</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="friends">
+            <h3>Friends</h3>
+            <ul>
+                {% for friend in friends %}
+                {% if current_user == friend.sender %}
+                <li>
+                    <a href="{{url_for('home', recipient=friend.recipient)}}">{{friend.recipient}}</a>
+                    <form method="POST" action="{{ url_for('block_user_route', recipient=friend.recipient) }}">
+                        <button type="submit">Block User</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('unblock_user_route', recipient=friend.recipient) }}">
+                        <button type="submit">Unblock User</button>
+                    </form>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{{url_for('home', recipient=friend.sender)}}">{{friend.sender}}</a>
+                    <form method="POST" action="{{ url_for('block_user_route', recipient=friend.sender) }}">
+                        <button type="submit">Block User</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('unblock_user_route', recipient=friend.sender) }}">
+                        <button type="submit">Unblock User</button>
+                    </form>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="requests">
+            <h3>Connect request</h3>
+            <ul>
+                {% for request in requests %}
+                <li>
+                    Request from <b>{{request.sender}}</b> : 
+                    <a href="{{url_for('accept_friend_request', recipient=request.sender)}}">Accept</a>
+                    <a href="{{url_for('reject_friend_request', recipient=request.sender)}}">Decline</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a href="{{url_for('logout', username=current_user)}}">LOGOUT</a>
+    </div>
+
+     
+</body>
+</html>

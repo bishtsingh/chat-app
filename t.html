@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/login" enctype="multipart/form-data">
+        <h1>WELCOME TO THE CHAT APP</h1>
+  <p>HIT THE BELOW BUTTON TO LOGIN</p>
+  <input type="button" value="LOGIN" id="loginButton">
+    </form>
+     
+
+    {% comment %} <script>
+        document.getElementById("loginButton").addEventListener("click", function() {
+          // Redirect the user to the login page
+          window.location.href = "/logout"; // Replace "login.html" with the actual login page URL
+        });
+      </script> {% endcomment %}
+
+</body>
+</html>
+
+
+
+# @app.route('/upload', methods=['POST'])
+# def create():
+#     try:
+#         if 'image_file' in request.files:
+#             image_file = request.files['image_file']
+
+#             if image_file and image_file.filename != '':
+#                 upload_file(request.form.get('user'), request.form.get('recipient'), image_file.filename,image_file)
+#     except:
+#         return jsonify({"message": "File Upload Failed"}),400
+#     return redirect('/users')
+
+
+
+
+{% comment %} document.getElementById("send_file").onclick = function () {
+  var fileInput = document.getElementById("image_file");
+  var file = fileInput.files[0];
+
+if (file) {
+   // Assuming 'socket' is your WebSocket object
+   var username = "{{recipient}}";
+
+    // Create a new FileReader to read the file content
+    var reader = new FileReader();
+
+    // Define an event handler for when the file is loaded
+  reader.onload = function(event) {
+   // Create an <img> element
+   var imageElement = document.createElement("img");
+
+    // Set the src attribute of the <img> element to the loaded file data
+     imageElement.src = event.target.result;
+
+    // Append the <img> element to the document
+   document.getElementById("image_container").appendChild(imageElement);
+};
+
+// Read the file as a data URL
+reader.readAsDataURL(file);
+
+  }
+}; {% endcomment %}
